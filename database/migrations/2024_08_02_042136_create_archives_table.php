@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('no_arsip');
             $table->date('tanggal_arsip');
             $table->string('file');
-            $table->string('department');
+            $table->string('departement');
             $table->string('filename');
             $table->string('status');
             $table->timestamps();

@@ -12,7 +12,7 @@ class ArchiveController extends Controller
      */
     public function index()
     {
-        //
+        return view('pages.arsip.index');
     }
 
     /**
@@ -20,7 +20,7 @@ class ArchiveController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.arsip.create');
     }
 
     /**

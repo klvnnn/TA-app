@@ -12,7 +12,7 @@ class LetterOutController extends Controller
      */
     public function index()
     {
-        //
+        return view('pages.surat.keluar.index');
     }
 
     /**
@@ -20,7 +20,7 @@ class LetterOutController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.surat.keluar.create');
     }
 
     /**

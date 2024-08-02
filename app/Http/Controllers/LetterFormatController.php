@@ -12,7 +12,7 @@ class LetterFormatController extends Controller
      */
     public function index()
     {
-        //
+        return view('pages.panduan.index');
     }
 
     /**
@@ -20,7 +20,7 @@ class LetterFormatController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.panduan.create');
     }
 
     /**

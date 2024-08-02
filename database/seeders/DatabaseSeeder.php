@@ -20,5 +20,17 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('gm_kksp'),
             'role' => 'Manager',
         ]);
+        DB::table('users')->insert([
+            'name' => 'Admin',
+            'email' => 'admin@kksp.id',
+            'password' => Hash::make('admin_kksp'),
+            'role' => 'Admin',
+        ]);
+        DB::table('users')->insert([
+            'name' => 'Archive Staff',
+            'email' => 'archive@kksp.id',
+            'password' => Hash::make('archive_kksp'),
+            'role' => 'Archive_Staff',
+        ]);
     }
 }
