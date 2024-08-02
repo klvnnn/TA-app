@@ -22,16 +22,20 @@ Route::get('/dashboard', function () {
     return view('pages.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-// Testing Route
-Route::get('/dashboard-test', function (){
-    return view('pages.dashboard');
-})->name('dashboard-test');
-
-Route::get('/auth-test', function (){
-    return view('auth.auth');
-})->name('auth-test');
-
 Route::prefix('dashboard')->middleware('auth')->group(function () {
+    //Letter In
+
+    //Letter Out
+    //Letter Format
+    //Print
+    //Departement
+
+    //Archive
+    Route::get('/arsip/create', function() {
+        return view('pages.arsip.create');
+    })->name('create-arsip');
+
+    //Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
