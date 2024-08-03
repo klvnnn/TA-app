@@ -65,7 +65,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
         Route::get('/', [ArchiveController::class, 'index'])->name('arsip.index');
         Route::get('/create', [ArchiveController::class, 'create'])->name('arsip.create');
         Route::post('/create', [ArchiveController::class, 'store'])->name('arsip.store');
-        Route::get('/show{id}', [ArchiveController::class, 'show'])->name('arsip.show');
+        Route::get('/show/{id}', [ArchiveController::class, 'show'])->name('arsip.show');
         Route::get('/edit/{id}', [ArchiveController::class, 'edit'])->name('arsip.edit');
         Route::put('/update/{id}', [ArchiveController::class, 'update'])->name('arsip.update');
         Route::delete('/delete/{id}', [ArchiveController::class, 'destroy'])->name('arsip.delete');

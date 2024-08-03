@@ -32,5 +32,9 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('archive_kksp'),
             'role' => 'Archive_Staff',
         ]);
+
+        $this->call([
+            DepartementSeeder::class,
+        ]);
     }
 }

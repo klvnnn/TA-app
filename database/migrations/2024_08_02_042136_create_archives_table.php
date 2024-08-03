@@ -15,10 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('no_arsip');
             $table->date('tanggal_arsip');
-            $table->string('file');
+            $table->string('file_arsip');
             $table->string('departement');
-            $table->string('filename');
-            $table->string('status');
+            $table->string('status')->default('Diproses');
             $table->timestamps();
         });
     }

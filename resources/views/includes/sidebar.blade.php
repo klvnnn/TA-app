@@ -53,7 +53,7 @@
                 <p>Kelola Surat</p>
                 <span class="caret"></span>
                 </a>
-                <div class="collapse" id="submenu">
+                <div class="collapse {{ $isSuratActive ? 'show' : '' }}" id="submenu">
                 <ul class="nav nav-collapse">
                     <li>
                         <a data-bs-toggle="collapse" href="#subnav1">
@@ -63,7 +63,7 @@
                             </p>
                             <span class="caret"></span>
                         </a>
-                        <div class="collapse" id="subnav1">
+                        <div class="collapse {{ $isSuratMasukActive ? 'show' : '' }}" id="subnav1">
                             <ul class="nav nav-collapse subnav">
                             <li>
                                 <a href="{{ route('surat-masuk.create') }}">
@@ -86,7 +86,7 @@
                             </p>
                             <span class="caret"></span>
                         </a>
-                        <div class="collapse" id="subnav2">
+                        <div class="collapse {{ $isSuratKeluarActive ? 'show' : '' }}" id="subnav2">
                             <ul class="nav nav-collapse subnav">
                                 <li>
                                     <a href="{{ route('surat-keluar.create') }}">
@@ -109,7 +109,7 @@
                             </p>
                             <span class="caret"></span>
                         </a>
-                        <div class="collapse" id="subnav3">
+                        <div class="collapse {{ $isSuratFormatActive ? 'show' : '' }}" id="subnav3">
                             <ul class="nav nav-collapse subnav">
                                 <li>
                                     <a href="{{ route('surat-format.create') }}">
@@ -136,14 +136,14 @@
                 <p>Kelola Arsip</p>
                 <span class="caret"></span>
                 </a>
-                <div class="collapse" id="arsipmenu">
+                <div class="collapse {{ $isArsipActive ? 'show' : '' }}" id="arsipmenu">
                 <ul class="nav nav-collapse">
                     <li>
                     <a href="{{ route('arsip.sign') }}">
-                        <p class="sub-item">
+                        <span class="sub-item">
                             <i class="fas fa-file-signature"></i>
-                            <p>Verifikasi Dokumen</p>
-                        </p>
+                            <p>Signature Dokumen</p>
+                        </span>
                     </a>
                     </li>
                     <li>
@@ -189,7 +189,7 @@
                 <p>Kelola User</p>
                 <span class="caret"></span>
                 </a>
-                <div class="collapse" id="usermenu">
+                <div class="collapse {{ $isUserActive ? 'show' : '' }}" id="usermenu">
                 <ul class="nav nav-collapse">
                     <li>
                     <a href="{{ route('user.create') }}">

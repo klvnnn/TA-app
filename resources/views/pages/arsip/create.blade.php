@@ -1,11 +1,26 @@
 @extends('layouts.app')
 
 @section('content')
-<div
-class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4"
->
-    <div>
-        <h3 class="fw-bold mb-3">Tambah Data Arsip</h3>
-    </div>
+<div class="page-header">
+    <h3 class="fw-bold mb-3">Tambah Data <span class="text-info">Arsip</span></h3>
+    <ul class="breadcrumbs mb-3">
+        <li class="nav-home">
+            <a href="#">
+            <i class="icon-home"></i>
+            </a>
+        </li>
+        <li class="separator">
+            <i class="icon-arrow-right"></i>
+        </li>
+        <li class="nav-item">
+            <a href="#">Tables</a>
+        </li>
+        <li class="separator">
+            <i class="icon-arrow-right"></i>
+        </li>
+        <li class="nav-item">
+            <a href="#">Datatables</a>
+        </li>
+    </ul>
 </div>
 @endsection

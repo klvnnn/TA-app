@@ -13,9 +13,8 @@ class Archive extends Model
     protected $fillable = [
         'no_arsip',
         'tanggal_arsip',
-        'file',
-        'department',
-        'filename',
+        'file_arsip',
+        'departement',
         'status',
     ];
 }

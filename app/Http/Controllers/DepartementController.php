@@ -12,7 +12,10 @@ class DepartementController extends Controller
      */
     public function index()
     {
-        //
+        $departement = Departement::latest()->get();
+        return view('pages.departement.index',[
+            'departement' => $departement
+        ]);
     }
 
     /**
@@ -20,7 +23,7 @@ class DepartementController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.departement.create');
     }
 
     /**

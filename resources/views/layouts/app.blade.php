@@ -106,80 +106,139 @@
 
         <!-- Chart JS -->
         <script>
-        var pieChart = document.getElementById("pieChart").getContext("2d"),
-            doughnutChart = document
-            .getElementById("doughnutChart")
-            .getContext("2d");
+            var pieChart = document.getElementById("pieChart").getContext("2d"),
+                doughnutChart = document
+                .getElementById("doughnutChart")
+                .getContext("2d");
 
-        var myPieChart = new Chart(pieChart, {
-            type: "pie",
-            data: {
-            datasets: [
-                {
-                data: [50, 35, 15],
-                backgroundColor: ["#1d7af3", "#f3545d", "#fdaf4b"],
-                borderWidth: 0,
+            var myPieChart = new Chart(pieChart, {
+                type: "pie",
+                data: {
+                datasets: [
+                    {
+                    data: [50, 35, 15],
+                    backgroundColor: ["#1d7af3", "#f3545d", "#fdaf4b"],
+                    borderWidth: 0,
+                    },
+                ],
+                labels: ["New Visitors", "Subscribers", "Active Users"],
                 },
-            ],
-            labels: ["New Visitors", "Subscribers", "Active Users"],
-            },
-            options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            legend: {
-                position: "bottom",
-                labels: {
-                fontColor: "rgb(154, 154, 154)",
-                fontSize: 11,
-                usePointStyle: true,
-                padding: 20,
+                options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                legend: {
+                    position: "bottom",
+                    labels: {
+                    fontColor: "rgb(154, 154, 154)",
+                    fontSize: 11,
+                    usePointStyle: true,
+                    padding: 20,
+                    },
                 },
-            },
-            pieceLabel: {
-                render: "percentage",
-                fontColor: "white",
-                fontSize: 14,
-            },
-            tooltips: false,
-            layout: {
-                padding: {
-                left: 20,
-                right: 20,
-                top: 20,
-                bottom: 20,
+                pieceLabel: {
+                    render: "percentage",
+                    fontColor: "white",
+                    fontSize: 14,
                 },
-            },
-            },
-        });
+                tooltips: false,
+                layout: {
+                    padding: {
+                    left: 20,
+                    right: 20,
+                    top: 20,
+                    bottom: 20,
+                    },
+                },
+                },
+            });
 
-        var myDoughnutChart = new Chart(doughnutChart, {
-            type: "doughnut",
-            data: {
-            datasets: [
-                {
-                data: [10, 20, 30],
-                backgroundColor: ["#f3545d", "#fdaf4b", "#1d7af3"],
-                },
-            ],
+            var myDoughnutChart = new Chart(doughnutChart, {
+                type: "doughnut",
+                data: {
+                datasets: [
+                    {
+                    data: [10, 20, 30],
+                    backgroundColor: ["#f3545d", "#fdaf4b", "#1d7af3"],
+                    },
+                ],
 
-            labels: ["Red", "Yellow", "Blue"],
-            },
-            options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            legend: {
-                position: "bottom",
-            },
-            layout: {
-                padding: {
-                left: 20,
-                right: 20,
-                top: 20,
-                bottom: 20,
+                labels: ["Red", "Yellow", "Blue"],
                 },
-            },
-            },
-        });
+                options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                legend: {
+                    position: "bottom",
+                },
+                layout: {
+                    padding: {
+                    left: 20,
+                    right: 20,
+                    top: 20,
+                    bottom: 20,
+                    },
+                },
+                },
+            });
+        </script>
+
+        <!-- Datatable -->
+        <script>
+            $(document).ready(function () {
+                $("#basic-datatables").DataTable({});
+        
+                $("#multi-filter-select").DataTable({
+                    pageLength: 5,
+                    initComplete: function () {
+                    this.api()
+                        .columns()
+                        .every(function () {
+                        var column = this;
+                        var select = $(
+                            '<select class="form-select"><option value=""></option></select>'
+                        )
+                            .appendTo($(column.footer()).empty())
+                            .on("change", function () {
+                            var val = $.fn.dataTable.util.escapeRegex($(this).val());
+        
+                            column
+                                .search(val ? "^" + val + "$" : "", true, false)
+                                .draw();
+                            });
+        
+                        column
+                            .data()
+                            .unique()
+                            .sort()
+                            .each(function (d, j) {
+                            select.append(
+                                '<option value="' + d + '">' + d + "</option>"
+                            );
+                            });
+                        });
+                    },
+                });
+        
+                // Add Row
+                $("#add-row").DataTable({
+                    pageLength: 5,
+                });
+        
+                var action =
+                    '<td> <div class="form-button-action"> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
+        
+                $("#addRowButton").click(function () {
+                    $("#add-row")
+                    .dataTable()
+                    .fnAddData([
+                        $("#addName").val(),
+                        $("#addPosition").val(),
+                        $("#addOffice").val(),
+                        action,
+                    ]);
+                    $("#addRowModal").modal("hide");
+                });
+            });
         </script>
     </body>
 </html>

@@ -12,7 +12,10 @@ class LetterOutController extends Controller
      */
     public function index()
     {
-        return view('pages.surat.keluar.index');
+        $letter_out = LetterOut::latest()->get();
+        return view('pages.surat.keluar.index',[
+            'letter_out' => $letter_out
+        ]);
     }
 
     /**

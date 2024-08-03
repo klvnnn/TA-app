@@ -12,7 +12,10 @@ class LetterInController extends Controller
      */
     public function index()
     {
-        return view('pages.surat.masuk.index');
+        $letter_in = LetterIn::latest()->get();
+        return view('pages.surat.masuk.index',[
+            'letter_in' => $letter_in
+        ]);
     }
 
     /**

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Archive;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ArchiveController extends Controller
 {
@@ -12,7 +13,10 @@ class ArchiveController extends Controller
      */
     public function index()
     {
-        return view('pages.arsip.index');
+        $arsip = Archive::latest()->get();
+        return view('pages.arsip.index',[
+            'arsip' => $arsip,
+        ]);
     }
 
     /**
@@ -28,7 +32,16 @@ class ArchiveController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'no_arsip' => 'required',
+            'tanggal_arsip' => 'required',
+            'file_arsip' => 'required',
+            'departement' => 'required',
+        ]);
+        $path = Storage::putFileAs('file_arsip', $request->file('file_arsip'), $request->user()->id);
+
+        Archive::create($validatedData);
+        return redirect()->back()->with('message', 'Sukses! Verifikasi Sedang Diproses!')->with('file_arsip',$path);
     }
 
     /**

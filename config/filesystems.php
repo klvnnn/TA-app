@@ -30,6 +30,13 @@ return [
 
     'disks' => [
 
+        'file_arsip' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/file_arsip'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+        ], 
+
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),
