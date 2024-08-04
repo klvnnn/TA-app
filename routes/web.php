@@ -63,7 +63,6 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
     Route::prefix('arsip')->group(function(){
         //Archive
         Route::get('/', [ArchiveController::class, 'index'])->name('arsip.index');
-        Route::get('/create', [ArchiveController::class, 'create'])->name('arsip.create');
         Route::post('/create', [ArchiveController::class, 'store'])->name('arsip.store');
         Route::get('/show/{id}', [ArchiveController::class, 'show'])->name('arsip.show');
         Route::get('/edit/{id}', [ArchiveController::class, 'edit'])->name('arsip.edit');

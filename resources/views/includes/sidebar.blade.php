@@ -138,23 +138,23 @@
                 </a>
                 <div class="collapse {{ $isArsipActive ? 'show' : '' }}" id="arsipmenu">
                 <ul class="nav nav-collapse">
-                    <li>
+                    <li class="{{ $isArsipSignActive ? 'active' : '' }}">
                     <a href="{{ route('arsip.sign') }}">
-                        <span class="sub-item">
+                        <p class="sub-item">
                             <i class="fas fa-file-signature"></i>
-                            <p>Signature Dokumen</p>
-                        </span>
+                            <p>Tambah Data Arsip</p>
+                        </p>
                     </a>
                     </li>
-                    <li>
+                    {{-- <li>
                     <a href="{{ route('arsip.create') }}">
                         <p class="sub-item">
                             <i class="fas fa-folder-open"></i>
                             <p>Tambah Data Arsip</p>
                         </p>
                     </a>
-                    </li>
-                    <li>
+                    </li> --}}
+                    <li class="{{ $isArsipListActive ? 'active' : '' }}">
                     <a href="{{ route('arsip.index') }}">
                         <p class="sub-item">
                             <i class="fas fa-th-list"></i>

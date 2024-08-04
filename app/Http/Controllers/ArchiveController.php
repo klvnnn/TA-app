@@ -13,7 +13,7 @@ class ArchiveController extends Controller
      */
     public function index()
     {
-        $arsip = Archive::latest()->get();
+        $arsip = Archive::where('status', 'Verified')->latest()->get();
         return view('pages.arsip.index',[
             'arsip' => $arsip,
         ]);
@@ -35,21 +35,26 @@ class ArchiveController extends Controller
         $validatedData = $request->validate([
             'no_arsip' => 'required',
             'tanggal_arsip' => 'required',
-            'file_arsip' => 'required',
+            'file_arsip' => 'required|file|mimes:pdf',
             'departement' => 'required',
         ]);
-        $path = Storage::putFileAs('file_arsip', $request->file('file_arsip'), $request->user()->id);
+        //Upload Storage
+        $filename = time() . '.' . $request->file_arsip->extension();
+        $validatedData['file_arsip'] = Storage::putFileAs('public/file_arsip', $request->file_arsip, $filename);
 
         Archive::create($validatedData);
-        return redirect()->back()->with('message', 'Sukses! Verifikasi Sedang Diproses!')->with('file_arsip',$path);
+        return redirect()->back()->with('success', 'Data berhasil di-input! Verifikasi Sedang Diproses!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Archive $archive)
+    public function show($id)
     {
-        //
+        $arsip = Archive::findOrFail($id);
+        return view('pages.arsip.show',[
+            'arsip' => $arsip,
+        ]);
     }
 
     /**
@@ -57,7 +62,10 @@ class ArchiveController extends Controller
      */
     public function edit(Archive $archive)
     {
-        //
+        $arsip = Archive::findOrFail($archive);
+        return view('pages.arsip.edit',[
+            'arsip' => $arsip,
+        ]);
     }
 
     /**

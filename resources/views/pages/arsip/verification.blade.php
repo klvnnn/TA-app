@@ -24,6 +24,13 @@
     </ul>
 </div>
 <div class="container-fluid px-4">
+    @if (session()->has('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button class="btn-close" type="button" data-bs-dismiss="alert"
+                aria-label="Close"></button>
+        </div>
+    @endif
     @if ($errors->any())
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
             <ul>
@@ -34,7 +41,7 @@
             <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
-    <form action="{{ route('arsip.store') }}" method="post">
+    <form action="{{ route('arsip.store') }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="row gx-4">
             <div class="col-lg-12">
@@ -70,7 +77,7 @@
                         <div class="mb-3 row">
                             <label for="departement" class="col-sm-3 col-form-label">Departement</label>
                             <div class="col-sm-9">
-                                <select name="departement" class="form-control @error('departement') is-invalid @enderror selectx">
+                                <select name="departement" class="form-control form-select @error('departement') is-invalid @enderror selectx" id="defaultSelect">
                                     <option selected disabled>Pilih Departement</option>
                                     @foreach ($departement as $item)
                                         <option value="{{ $item->kode }}">{{ $item->nama}}</option>
@@ -86,7 +93,7 @@
                         <div class="mb-3 row">
                             <label for="file_arsip" class="col-sm-3 col-form-label">File Arsip</label>
                             <div class="col-sm-9">
-                                <input type="file" class="form-control @error('file_arsip') is-invalid @enderror" name="file_arsip">
+                                <input type="file" class="form-control @error('file_arsip') is-invalid @enderror" value="{{ old('file_arsip') }}"name="file_arsip">
                                 <div id="file_arsip" class="form-text">Upload File : pdf</div>
                             </div>
                             @error('file_arsip')

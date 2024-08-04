@@ -31,6 +31,8 @@ class AppServiceProvider extends ServiceProvider
             $isSuratFormatActive = Str::contains($currentRouteName, 'surat-format');
             //Arsip Route
             $isArsipActive = Str::contains($currentRouteName, 'arsip');
+            $isArsipSignActive = Str::contains($currentRouteName, 'arsip.sign');
+            $isArsipListActive = Str::contains($currentRouteName, 'arsip.index');
             //Departement Route
             $isDepartementActive = Str::contains($currentRouteName, 'departement');
             //Signature Route
@@ -47,6 +49,8 @@ class AppServiceProvider extends ServiceProvider
             $view->with('isSuratFormatActive', $isSuratFormatActive);
             //Arsip Variable
             $view->with('isArsipActive', $isArsipActive);
+            $view->with('isArsipSignActive', $isArsipSignActive);
+            $view->with('isArsipListActive', $isArsipListActive);
             //Departement Variable
             $view->with('isDepartementActive', $isDepartementActive);
             //Request Variable

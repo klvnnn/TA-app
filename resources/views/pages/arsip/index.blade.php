@@ -38,7 +38,7 @@
                 <thead>
                     <tr>
                     <th>id</th>
-                    <th>Nomor</th>
+                    <th>Nomor Arsip</th>
                     <th>Departement</th>
                     <th>Tanggal</th>
                     <th>Status</th>
@@ -52,7 +52,22 @@
                             <td>{{ $item->no_arsip }}</td>
                             <td>{{ $item->departement }}</td>
                             <td>{{ $item->tanggal_arsip }}</td>
-                            <td>{{ $item->status }}</td>
+                            <td>
+                                @php
+                                    $statusClass = '';
+                                    switch ($item->status) {
+                                        case 'Diproses':
+                                            $statusClass = 'text-warning';
+                                            break;
+                                        case 'Verified':
+                                            $statusClass = 'text-success';
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                @endphp
+                                <span class="{{ $statusClass }}">{{ $item->status }}</span>
+                            </td>
                             <td>
                                 <div class="form-button-action">
                                     <button
@@ -62,7 +77,20 @@
                                         class="btn btn-link btn-primary btn-lg"
                                         data-original-title="Edit Task"
                                     >
-                                        <i class="fa fa-edit"></i>
+                                        <a href="{{ route('arsip.edit', $item->id) }}">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                    </button>
+                                    <button
+                                        type="button"
+                                        data-bs-toggle="tooltip"
+                                        title=""
+                                        class="btn btn-link btn-info"
+                                        data-original-title="Edit"
+                                    >
+                                        <a href="{{ route('arsip.show', $item->id) }}">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
                                     </button>
                                     <button
                                         type="button"
