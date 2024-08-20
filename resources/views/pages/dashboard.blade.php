@@ -24,7 +24,7 @@ class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-
             <div class="col col-stats ms-3 ms-sm-0">
                 <div class="numbers">
                 <p class="card-category">Register User</p>
-                <h4 class="card-title">1,294</h4>
+                <h4 id="totalUser" class="card-title">{{ $registeredUser }}</h4>
                 </div>
             </div>
             </div>
@@ -45,7 +45,7 @@ class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-
             <div class="col col-stats ms-3 ms-sm-0">
                 <div class="numbers">
                 <p class="card-category">Manager</p>
-                <h4 class="card-title">1303</h4>
+                <h4 id="totalManager" class="card-title">{{ $manager }}</h4>
                 </div>
             </div>
             </div>
@@ -66,7 +66,7 @@ class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-
             <div class="col col-stats ms-3 ms-sm-0">
                 <div class="numbers">
                 <p class="card-category">Admin</p>
-                <h4 class="card-title">1,345</h4>
+                <h4 id="totalAdmin" class="card-title">{{ $admin }}</h4>
                 </div>
             </div>
             </div>
@@ -87,7 +87,7 @@ class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-
             <div class="col col-stats ms-3 ms-sm-0">
                 <div class="numbers">
                 <p class="card-category">Arsip Staff</p>
-                <h4 class="card-title">576</h4>
+                <h4 id="totalStaff" class="card-title">{{ $archivist }}</h4>
                 </div>
             </div>
             </div>
@@ -101,7 +101,11 @@ class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-
         <div class="card">
         <div class="card-header">
             <!-- Surat Chart -->
-            <div class="card-title">Stats Surat Masuk & Surat Keluar</div>
+            <div class="card-title">Persentase total Arsip 
+                <p id="totalArsipSigned" hidden>{{ $arsipsigned }}</p>
+                <p id="totalArsipDiproses" hidden>{{ $arsipdiproses }}</p>
+                <p id="totalArsipDitolak" hidden>{{ $arsipditolak }}</p>
+            </div>
         </div>
         <div class="card-body">
             <div class="chart-container">
@@ -117,14 +121,14 @@ class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-
     <div class="col-md-6">
         <div class="card">
         <div class="card-header">
-            <div class="card-title">Stats Arsip</div>
+            <div class="card-title">Jumlah total Arsip</div>
         </div>
         <div class="card-body">
             <div class="chart-container">
-            <canvas
-                id="doughnutChart"
-                style="width: 50%; height: 50%"
-            ></canvas>
+                <canvas
+                    id="doughnutChart"
+                    style="width: 50%; height: 50%"
+                ></canvas>
             </div>
         </div>
         </div>

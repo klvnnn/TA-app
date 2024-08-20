@@ -45,20 +45,6 @@
         <div class="wrapper">
             @include('includes.sidebar')
 
-            {{-- <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endif
-
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main> --}}
-
             <div class="main-panel">
                 @include('includes.header')
                 <div class="container">
@@ -106,6 +92,20 @@
 
         <!-- Chart JS -->
         <script>
+            //Total User
+            var totalArsipSigned = document.getElementById("totalArsipSigned").innerText;
+            var totalArsipSignedValue = parseInt(totalArsipSigned);
+            var totalArsipDiproses = document.getElementById("totalArsipDiproses").innerText;
+            var totalArsipDiprosesValue = parseInt(totalArsipDiproses);
+            var totalArsipDitolak = document.getElementById("totalArsipDitolak").innerText;
+            var totalArsipDitolakValue = parseInt(totalArsipDitolak);
+            //Total User
+            var totalUser = document.getElementById("totalUser").innerText;
+            var totalUserValue = parseInt(totalUser);
+            //Total Manager
+            var totalManager = document.getElementById("totalManager").innerText;
+            var totalManagerValue = parseInt(totalManager);
+
             var pieChart = document.getElementById("pieChart").getContext("2d"),
                 doughnutChart = document
                 .getElementById("doughnutChart")
@@ -116,12 +116,12 @@
                 data: {
                 datasets: [
                     {
-                    data: [50, 35, 15],
-                    backgroundColor: ["#1d7af3", "#f3545d", "#fdaf4b"],
+                    data: [totalArsipSignedValue, totalArsipDiprosesValue, totalArsipDitolakValue],
+                    backgroundColor: ["#1d7af3","#fdaf4b", "#f3545d"],
                     borderWidth: 0,
                     },
                 ],
-                labels: ["New Visitors", "Subscribers", "Active Users"],
+                labels: ["Arsip Signed", "Arsip Diproses", "Arsip Ditolak"],
                 },
                 options: {
                 responsive: true,
@@ -157,12 +157,12 @@
                 data: {
                 datasets: [
                     {
-                    data: [10, 20, 30],
-                    backgroundColor: ["#f3545d", "#fdaf4b", "#1d7af3"],
+                    data: [totalArsipSignedValue, totalArsipDiprosesValue, totalArsipDitolakValue],
+                    backgroundColor: ["#1d7af3","#fdaf4b", "#f3545d"],
                     },
                 ],
 
-                labels: ["Red", "Yellow", "Blue"],
+                labels: ["Arsip Signed", "Arsip Diproses", "Arsip Ditolak"],
                 },
                 options: {
                 responsive: true,
@@ -240,5 +240,6 @@
                 });
             });
         </script>
+        @stack('alert-script')
     </body>
 </html>

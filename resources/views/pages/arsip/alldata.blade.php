@@ -44,11 +44,14 @@
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <div>
                         <h4 class="card-title mb-0">Daftar Arsip</h4>
-                        <a class="text-info">Note: Data teratas adalah data terbaru</a>
+                        <a class="text-muted">Note: Data teratas adalah data terbaru</a>
                     </div>
                     <div>
                         <a class="btn btn-success btn-xs me-2" href="#">
                             &nbsp;Export to Excel
+                        </a>
+                        <a class="btn btn-danger btn-xs" href="#">
+                            &nbsp;Reset all data
                         </a>
                     </div>
                 </div>
@@ -69,6 +72,7 @@
                     <th>Status</th>
                     <th>Sign By</th>
                     <th>Show</th>
+                    <th>Hapus</th>
                     </tr>
                 </thead>
                     <tbody>
@@ -97,6 +101,12 @@
                                 <a class="btn btn-primary btn-xs" href="{{ route('arsip.show', $item->id) }}">
                                     <i class="fa fa-eye"></i>
                                     &nbsp;Show
+                                </a>
+                            </td>
+                            <td>
+                                <a class="btn btn-danger btn-xs" href="#">
+                                    <i class="fa fa-times"></i>
+                                    &nbsp;Hapus
                                 </a>
                             </td>
                         </tr>

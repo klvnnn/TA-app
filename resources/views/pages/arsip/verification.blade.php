@@ -5,7 +5,7 @@
     <h3 class="fw-bold mb-3"><span class="text-warning">Signature</span> / Verification Dokumen</h3>
     <ul class="breadcrumbs mb-3">
         <li class="nav-home">
-            <a href="#">
+            <a href="{{ route('dashboard') }}">
             <i class="icon-home"></i>
             </a>
         </li>
@@ -13,105 +13,90 @@
             <i class="icon-arrow-right"></i>
         </li>
         <li class="nav-item">
-            <a href="#">Tables</a>
+            <a>Kelola Arsip</a>
         </li>
         <li class="separator">
             <i class="icon-arrow-right"></i>
         </li>
         <li class="nav-item">
-            <a href="#">Datatables</a>
+            <a>Verification</a>
         </li>
     </ul>
 </div>
-<div class="container-fluid px-4">
-    @if (session()->has('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('success') }}
-            <button class="btn-close" type="button" data-bs-dismiss="alert"
-                aria-label="Close"></button>
-        </div>
-    @endif
-    @if ($errors->any())
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-            <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
-    <form action="{{ route('arsip.store') }}" method="post" enctype="multipart/form-data">
-        @csrf
-        <div class="row gx-4">
-            <div class="col-lg-12">
-                <div class="card mb-4">
-                    <div class="card-header">Input Data Arsip</div>
-                    <div class="card-body">
-                        <div class="mb-3 row">
-                            <label for="no_arsip" class="col-sm-3 col-form-label">No. Arsip</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control"
-                                    value="{{ old('no_arsip') }}" name="no_arsip" placeholder="Nomor Arsip"
-                                    required>
-                            </div>
-                            @error('no_arsip')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+            <h4 class="card-title">Daftar Arsip</h4>
+            <a class="text-info">Note: Data teratas adalah data terbaru</a>
+            </div>
+            <div class="card-body">
+            <div class="table-responsive">
+                <table
+                id="basic-datatables"
+                class="display table table-striped table-hover"
+                >
+                <thead>
+                    <tr>
+                    <th>id</th>
+                    <th>Nomor</th>
+                    <th>Departement</th>
+                    <th>Divisi</th>
+                    <th>Tanggal</th>
+                    <th>Status</th>
+                    <th>Sign By</th>
+                    <th style="width: 10%">Action</th>
+                    <th>Cek Otentikasi</th>
+                    </tr>
+                </thead>
+                    <tbody>
+                        @foreach ($arsip as $item )
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $item->no_arsip }}</td>
+                            <td>{{ $item->departement }}</td>
+                            <td>{{ $item->subDepartement->nama }}</td>
+                            <td>{{ $item->tanggal_arsip }}</td>
+                            <td>
+                                @php
+                                    $statusClass = '';
+                                    switch ($item->status) {
+                                        case 'diproses':
+                                            $statusClass = 'text-warning';
+                                            break;
+                                        case 'signed':
+                                            $statusClass = 'text-success';
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                @endphp
+                                <span class="{{ $statusClass }}">{{ $item->status }}</span>
+                            </td>
+                            <td>{{ $item->signedBy->name}}</td>
+                            <td>
+                                <div class="form-button-action">
+                                    <a class="btn btn-primary btn-xs" href="{{ route('arsip.show', $item->id) }}">
+                                        <i class="fa fa-eye"></i>
+                                        &nbsp;Show
+                                    </a>
                                 </div>
-                            @enderror
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="tanggal_arsip" class="col-sm-3 col-form-label">Tanggal Arsip</label>
-                            <div class="col-sm-9">
-                                <input type="date"
-                                    class="form-control @error('tanggal_arsip') is-invalid @enderror"
-                                    value="{{ old('tanggal_arsip') }}" name="tanggal_arsip" required>
-                            </div>
-                            @error('tanggal_arsip')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="departement" class="col-sm-3 col-form-label">Departement</label>
-                            <div class="col-sm-9">
-                                <select name="departement" class="form-control form-select @error('departement') is-invalid @enderror selectx" id="defaultSelect">
-                                    <option selected disabled>Pilih Departement</option>
-                                    @foreach ($departement as $item)
-                                        <option value="{{ $item->kode }}">{{ $item->nama}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            @error('departement')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="file_arsip" class="col-sm-3 col-form-label">File Arsip</label>
-                            <div class="col-sm-9">
-                                <input type="file" class="form-control @error('file_arsip') is-invalid @enderror" value="{{ old('file_arsip') }}"name="file_arsip">
-                                <div id="file_arsip" class="form-text">Upload File : pdf</div>
-                            </div>
-                            @error('file_arsip')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="archives" class="col-sm-3 col-form-label"></label>
-                            <div class="col-sm-9">
-                                <button class="btn btn-primary" type="submit">Simpan</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                            </td>
+                            <td>
+                                <center>
+                                    <a class="btn btn-primary btn-xs" href="{{ route('sign.verify', $item->id) }}">
+                                        <i class="fa fa-clipboard-check"></i>
+                                        &nbsp;Verify Signature
+                                    </a>
+                                </center>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
             </div>
         </div>
-    </form>
+    </div>
 </div>
 @endsection

@@ -14,11 +14,14 @@ return new class extends Migration
         Schema::create('archives', function (Blueprint $table) {
             $table->id();
             $table->string('no_arsip');
+            $table->unsignedBigInteger('signed_by')->nullable();
             $table->date('tanggal_arsip');
             $table->string('file_arsip');
             $table->string('departement');
-            $table->string('status')->default('Diproses');
+            $table->string('status')->default('diproses');
+            $table->text('signature')->nullable();
             $table->timestamps();
+            $table->foreign('signed_by')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

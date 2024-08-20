@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Departement;
+use App\Models\SubDepartement;
 use App\Models\User;
+use Hash;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -12,7 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::get();
+        $user = User::where('role', 'admin')->orWhere('role', 'archivist')->get();
         return view('pages.user.index',[
             'user' => $user
         ]);
@@ -23,7 +26,11 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('pages.user.create');
+        $departement = Departement::get();
+
+        return view('pages.user.create',[
+            'departement' => $departement
+        ]);
     }
 
     /**
@@ -31,7 +38,17 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'role' => 'required',
+            'name' => 'required|max:255',
+            'email' => 'required|email:dns|unique:users',
+            'password' => 'required|min:5|max:255',
+            'departement_id' => 'required',
+        ]);
+        $validatedData['password'] = Hash::make($validatedData['password']);
+        User::create($validatedData);
+
+        return redirect()->route('user.index')->with('success','Sukses! user berhasil dibuat');    
     }
 
     /**
@@ -61,8 +78,11 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+        $user = User::findorFail($request->delete_id);
+        $user->delete();
+
+        return redirect()->route('user.index')->with('success', 'Sukses! Data Pengguna telah dihapus');
     }
 }

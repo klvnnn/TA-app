@@ -12,6 +12,13 @@ class Departement extends Model
     protected $guard = [];
     protected $fillable = [
         'nama',
-        'kode',
     ];
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
+    public function subDepartements()
+    {
+        return $this->hasMany(SubDepartement::class);
+    }
 }

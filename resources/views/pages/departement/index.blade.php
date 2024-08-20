@@ -5,7 +5,12 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-            <h4 class="card-title">Daftar <span class="text-primary"> Departement</span></h4>
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4 class="card-title">Daftar <span class="text-primary"> Divisi</span></h4>
+                    <a class="btn btn-info btn-xs" href="{{ route('departement.create') }}">
+                        &nbsp;Tambah Divisi
+                    </a>
+                </div>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -16,6 +21,7 @@
                     <thead>
                         <tr>
                         <th>No</th>
+                        <th>Departement</th>
                         <th>Name</th>
                         <th>Kode</th>
                         <th style="width: 10%">Action</th>
@@ -25,19 +31,15 @@
                         @foreach ($departement as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
+                            <td>{{ $item->departement->nama }}</td>
                             <td>{{ $item->nama }}</td>
                             <td>{{ $item->kode }}</td>
                             <td>
                                 <div class="form-button-action">
-                                    <button
-                                        type="button"
-                                        data-bs-toggle="tooltip"
-                                        title=""
-                                        class="btn btn-link btn-danger"
-                                        data-original-title="Remove"
-                                    >
+                                    <a class="btn btn-danger btn-xs" href="#">
                                         <i class="fa fa-times"></i>
-                                    </button>
+                                        &nbsp;Hapus
+                                    </a>
                                 </div>
                             </td>
                         </tr>

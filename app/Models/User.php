@@ -22,6 +22,9 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'departement_id',
+        'private_key',
+        'public_key',
     ];
 
     /**
@@ -42,4 +45,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function archives()
+    {
+        return $this->hasMany(Archive::class);
+    }
+    public function departement()
+    {
+        return $this->belongsTo(Departement::class);
+    }
 }

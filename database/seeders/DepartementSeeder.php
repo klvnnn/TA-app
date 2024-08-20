@@ -14,13 +14,8 @@ class DepartementSeeder extends Seeder
     public function run(): void
     {
         DB::table('departements')->insert([
-            'nama' => 'UMUM & LEGAL',
-            'kode' => 'UMM',
-        ]);
-
-        DB::table('departements')->insert([
-            'nama' => 'Akutansi',
-            'kode' => 'AKT',
+            ['nama' => 'UMUM & LEGAL'],
+            ['nama' => 'Akuntansi'],
         ]);
     }
 }

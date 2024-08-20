@@ -9,6 +9,8 @@ use App\Http\Controllers\LetterOutController;
 use App\Http\Controllers\PrintController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Models\Archive;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,7 +29,22 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('pages.dashboard');
+    $registeredUser = User::get()->count();
+    $manager = User::where('role','manager')->count();
+    $admin = User::where('role','admin')->count();
+    $archivist = User::where('role','archivist')->count();
+    $arsipsigned = Archive::where('status', 'signed')->count();
+    $arsipdiproses = Archive::where('status', 'diproses')->count();
+    $arsipditolak = Archive::where('status', 'ditolak')->count();
+    return view('pages.dashboard',[
+        'registeredUser' => $registeredUser,
+        'manager' => $manager,
+        'admin' => $admin,
+        'archivist' => $archivist,
+        'arsipsigned' => $arsipsigned,
+        'arsipdiproses' => $arsipdiproses,
+        'arsipditolak' => $arsipditolak,
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::prefix('dashboard')->middleware('auth')->group(function () {
@@ -62,17 +79,25 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
 
     Route::prefix('arsip')->group(function(){
         //Archive
-        Route::get('/', [ArchiveController::class, 'index'])->name('arsip.index');
+        Route::get('/index', [ArchiveController::class, 'index'])->name('arsip.index');
+        Route::get('/create', [ArchiveController::class, 'create'])->name('arsip.create');
         Route::post('/create', [ArchiveController::class, 'store'])->name('arsip.store');
         Route::get('/show/{id}', [ArchiveController::class, 'show'])->name('arsip.show');
-        Route::get('/edit/{id}', [ArchiveController::class, 'edit'])->name('arsip.edit');
-        Route::put('/update/{id}', [ArchiveController::class, 'update'])->name('arsip.update');
-        Route::delete('/delete/{id}', [ArchiveController::class, 'destroy'])->name('arsip.delete');
-        //DSA
-        Route::get('/sign-dokumen', [DigitalSignatureController::class, 'signPdf'])->name('arsip.sign');
+        Route::get('/verify', [ArchiveController::class, 'verify'])->name('arsip.verify');
+        Route::get('/status', [ArchiveController::class, 'status'])->name('arsip.status');
+        Route::get('/alldata', [ArchiveController::class, 'alldata'])->name('arsip.alldata');
+        Route::get('/reset/status/reject', [ArchiveController::class, 'resetRejected'])->name('arsip.reset.rejected');
     });
-    //Request Sign
-    Route::get('/sign-dokumen/request', [DigitalSignatureController::class, 'signRequest'])->name('sign.request');
+
+    Route::prefix('sign')->group(function(){
+        //Request Sign
+        Route::post('/generate-key', [DigitalSignatureController::class, 'generateKeys'])->name('sign.create-key');
+        Route::get('/dokumen/request', [DigitalSignatureController::class, 'signRequest'])->name('sign.request');
+        Route::get('/dokumen/{id}', [DigitalSignatureController::class, 'signDocument'])->name('sign.document');
+        Route::get('/dokumen/show/{id}', [DigitalSignatureController::class, 'show'])->name('sign.show');
+        Route::get('/dokumen/verify/{id}', [DigitalSignatureController::class, 'verifyDocument'])->name('sign.verify');
+        Route::post('/dokumen/{id}/reject', [DigitalSignatureController::class, 'rejectDocument'])->name('sign.reject');
+    });
     
     //Departement
     Route::get('/departement', [DepartementController::class, 'index'])->name('departement.index');
@@ -84,7 +109,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
     Route::get('/user', [UserController::class, 'index'])->name('user.index');
     Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
     Route::post('/user/create', [UserController::class, 'store'])->name('user.store');
-    Route::delete('/user/delete/{id}', [UserController::class, 'destroy'])->name('user.delete');
+    Route::delete('/user/{id}/delete', [UserController::class, 'destroy'])->name('user.delete');
 
     //Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

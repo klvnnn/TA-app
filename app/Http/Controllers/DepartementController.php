@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Departement;
+use App\Models\SubDepartement;
 use Illuminate\Http\Request;
 
 class DepartementController extends Controller
@@ -12,9 +13,12 @@ class DepartementController extends Controller
      */
     public function index()
     {
-        $departement = Departement::latest()->get();
+        $subDepartements = SubDepartement::with('departement')->get();
+        $subDepartements = $subDepartements->sortBy(function ($subDepartement) {
+            return $subDepartement->departement->name;
+        });
         return view('pages.departement.index',[
-            'departement' => $departement
+            'departement' => $subDepartements
         ]);
     }
 
@@ -23,7 +27,10 @@ class DepartementController extends Controller
      */
     public function create()
     {
-        return view('pages.departement.create');
+        $departement = Departement::get()->all();
+        return view('pages.departement.create',[
+            'departement' => $departement
+        ]);
     }
 
     /**
@@ -31,7 +38,13 @@ class DepartementController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'departement_id' => 'required',
+            'nama' => 'required',
+            'kode' => 'required',
+        ]);
+        SubDepartement::create($validatedData);
+        return redirect()->back()->with('success', 'Sukses, divisi berhasil ditambahkan');
     }
 
     /**
