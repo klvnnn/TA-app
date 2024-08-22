@@ -182,8 +182,11 @@ class ArchiveController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Archive $archive)
+    public function destroy($id)
     {
-        //
+        $arsip = Archive::findorFail($id);
+        $arsip->delete();
+
+        return redirect()->route('arsip.index')->with('success', 'Sukses! Data Arsip telah dihapus');
     }
 }

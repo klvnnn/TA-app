@@ -37,6 +37,29 @@
             aria-label="Close"></button>
     </div>
 @endif
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="deleteForm" method="POST">
+                @csrf
+                @method('DELETE')
+                <div class="modal-header">
+                    <h5 class="modal-title">Hapus Arsip</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Apakah anda yakin ingin menghapus dokumen ini?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Tidak, Batalkan</button>
+                    <button class="btn btn-danger" type="submit">
+                        <i class="far fa-trash-alt"></i> &nbsp; Ya, Hapus
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="col-md-12">
         <div class="card">
@@ -69,6 +92,7 @@
                     <th>Status</th>
                     <th>Sign By</th>
                     <th>Show</th>
+                    <th>Hapus</th>
                     </tr>
                 </thead>
                     <tbody>
@@ -99,6 +123,12 @@
                                     &nbsp;Show
                                 </a>
                             </td>
+                            <td>
+                                <a class="btn btn-danger btn-xs delete" data-id="{{ $item->id }}" href="#">
+                                    <i class="fa fa-trash"></i>
+                                    &nbsp;Delete
+                                </a>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -109,3 +139,17 @@
     </div>
 </div>
 @endsection
+@push('alert-script')
+<script>
+    $(document).ready(function() {
+        $(document).on('click', '.delete', function(e) {
+            e.preventDefault();
+
+            var id = $(this).data('id');
+            var url = "{{ route('arsip.delete', ':id') }}".replace(':id', id);
+            $('#deleteForm').attr('action', url);
+            $('#deleteModal').modal('show');
+        });
+    });
+</script>
+@endpush

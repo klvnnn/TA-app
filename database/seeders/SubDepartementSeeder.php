@@ -22,7 +22,7 @@ class SubDepartementSeeder extends Seeder
             ['nama' => 'Keuangan','kode'=> 'KEU', 'departement_id' => $accountingDepartmentId],
             ['nama' => 'Manajemen','kode'=> 'MNJ','departement_id' => $accountingDepartmentId],
             ['nama' => 'Operasional','kode'=> 'OP','departement_id' => $legalDepartmentId],
-            ['nama' => 'Kearsipan','kode'=> 'ARSIP','departement_id' => $legalDepartmentId],
+            ['nama' => 'Personalia','kode'=> 'SDM','departement_id' => $legalDepartmentId],
         ]);
     }
 }
